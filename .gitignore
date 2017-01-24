@@ -1,0 +1,9 @@
+# IDE/build process related files and folders
+.idea/
+.gradle/
+
+# Build output related files and folders
+build/
+classes/
+out/
+
