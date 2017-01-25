@@ -8,7 +8,10 @@ import java.util.stream.Collectors;
 
 public class ChiSquare {
 
-    private static final int HIGHEST = 300;
+    /**
+     * The maximum amount of selected words in the resulting Vocabulary.
+     */
+    private static final int MAXIMUM_VOCABULARY_LENGTH = 300;
 
     /**
      * Creates a list of words to be used for processing text documents.
@@ -62,32 +65,11 @@ public class ChiSquare {
      * @return list of best words to use as vocabulary
      */
     private static List<String> getHighestValues(HashMap<String, Double> wordScores) {
-        int loopCount = (wordScores.values().size() > HIGHEST) ? HIGHEST : wordScores.values().size();
-        List<String> result = new ArrayList<>();
-
-        Set<Double> chiValues = new HashSet<>(wordScores.values());
-        List<Double> sortedValues = new ArrayList<>(chiValues);
-        sortedValues.sort(Collections.reverseOrder());
-
-        for (int i = 0; i < loopCount; i++) {
-            result.addAll(getKeysByValue(wordScores, sortedValues.get(i)));
-        }
-        return result;
-    }
-
-    /**
-     * Custom method to convert a value of a map into its key(s).
-     * @param map
-     * @param value
-     * @return a set of keys
-     */
-    private static Set<String> getKeysByValue(HashMap<String, Double> map, Double value) {
-        return map.entrySet()
+        return wordScores.entrySet()
                 .stream()
-                .filter(entry -> Objects.equals(entry.getValue(), value))
+                .sorted((o1, o2) -> -Double.compare(o1.getValue(), o2.getValue()))
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+                .limit(MAXIMUM_VOCABULARY_LENGTH)
+                .collect(Collectors.toList());
     }
-
-
 }
