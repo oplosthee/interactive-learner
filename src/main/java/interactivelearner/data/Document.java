@@ -1,4 +1,4 @@
-package interactivelearner.util;
+package interactivelearner.data;
 
 import java.util.HashMap;
 import java.util.List;

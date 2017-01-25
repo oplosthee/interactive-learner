@@ -1,7 +1,7 @@
 package interactivelearner.featureselection;
 
-import interactivelearner.util.Category;
-import interactivelearner.util.Corpus;
+import interactivelearner.data.Category;
+import interactivelearner.data.Corpus;
 
 import java.util.*;
 import java.util.stream.Collectors;

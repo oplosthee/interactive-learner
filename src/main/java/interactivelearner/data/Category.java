@@ -1,4 +1,4 @@
-package interactivelearner.util;
+package interactivelearner.data;
 
 import java.util.ArrayList;
 import java.util.List;

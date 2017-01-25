@@ -1,6 +1,6 @@
 package interactivelearner.featureselection;
 
-import interactivelearner.util.Document;
+import interactivelearner.data.Document;
 
 import java.util.Arrays;
 import java.util.List;
