@@ -9,7 +9,10 @@ import java.util.stream.Collectors;
 public class Tokenizer {
 
     public static Document processString(String text) {
-        String[] words = text.split(" ");
+        String[] words = text
+                .replace("\n", " ")
+                .replaceAll("\r", " ")
+                .split(" ");
 
         List<String> result = Arrays.stream(words)
                 .map(s -> s.toLowerCase().replaceAll("[^a-zA-Z]", ""))
