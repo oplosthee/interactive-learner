@@ -2,10 +2,11 @@ package interactivelearner.util;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Document {
 
-    private HashMap<String, Integer> words = new HashMap<String, Integer>();
+    private HashMap<String, Integer> words = new HashMap<>();
 
     public Document(List<String> words) {
         indexWords(words);
@@ -17,6 +18,14 @@ public class Document {
 
     public int totalWords() {
         return words.keySet().size();
+    }
+
+    public boolean containsWord(String word) {
+        return words.containsKey(word);
+    }
+
+    public Set<String> getWords() {
+        return words.keySet();
     }
 
     private void indexWords(List<String> words) {
