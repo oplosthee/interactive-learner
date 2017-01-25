@@ -10,6 +10,11 @@ public class ChiSquare {
 
     private static final int HIGHEST = 300;
 
+    /**
+     * Creates a list of words to be used for processing text documents.
+     * @param corpus the corpus to be used for selecting the meaningful words
+     * @return list of meaningful words
+     */
     public static List<String> createVocabulary(Corpus corpus) {
         Set<String> words = corpus.getWords();
         HashMap<String, Double> wordScores = new HashMap<>();
@@ -19,6 +24,12 @@ public class ChiSquare {
         return getHighestValues(wordScores);
     }
 
+    /**
+     * Calculates the chi-square value of a word.
+     * @param word the word for which the chi-square value needs to be calculated
+     * @param corpus the word set in calculating the chi-square value
+     * @return the chi-square value of the given word
+     */
     private static double chiSquareValue(String word, Corpus corpus) {
         double result = 0;
         int categoryAmount = corpus.getCategories().size();
@@ -45,17 +56,31 @@ public class ChiSquare {
         return result;
     }
 
+    /**
+     * Returns a list of words corresponding to the highest scored chi-square values.
+     * @param wordScores map of words and chi-square values
+     * @return list of best words to use as vocabulary
+     */
     private static List<String> getHighestValues(HashMap<String, Double> wordScores) {
+        int loopCount = (wordScores.values().size() > HIGHEST) ? HIGHEST : wordScores.values().size();
         List<String> result = new ArrayList<>();
+
         Set<Double> chiValues = new HashSet<>(wordScores.values());
         List<Double> sortedValues = new ArrayList<>(chiValues);
         sortedValues.sort(Collections.reverseOrder());
-        for (int i = 0; i < HIGHEST; i++) {
+
+        for (int i = 0; i < loopCount; i++) {
             result.addAll(getKeysByValue(wordScores, sortedValues.get(i)));
         }
         return result;
     }
 
+    /**
+     * Custom method to convert a value of a map into its key(s).
+     * @param map
+     * @param value
+     * @return a set of keys
+     */
     private static Set<String> getKeysByValue(HashMap<String, Double> map, Double value) {
         return map.entrySet()
                 .stream()
