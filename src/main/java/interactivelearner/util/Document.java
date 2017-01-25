@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Document {
 
-    private HashMap<String, Integer> words = new HashMap<String, Integer>();
+    private HashMap<String, Integer> words = new HashMap<>();
 
     public Document(List<String> words) {
         indexWords(words);
