@@ -23,6 +23,10 @@ public class Category {
         documents.add(document);
     }
 
+    public void addDocuments(List<Document> documents) {
+        documents.addAll(documents);
+    }
+
     public int getWordCount() {
         int count = 0;
         for (Document document : documents) {

@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 public class Corpus {
 
     private List<Category> categories;
+    private int maximumVocabularyLength;
 
-    public Corpus() {
+    public Corpus(int maximumVocabularyLength) {
         this.categories = new ArrayList<>();
+        this.maximumVocabularyLength = maximumVocabularyLength;
     }
 
     public void addCategory(Category category) {
@@ -50,5 +52,9 @@ public class Corpus {
         }
 
         return count;
+    }
+
+    public int getVocabularyLength() {
+        return maximumVocabularyLength;
     }
 }

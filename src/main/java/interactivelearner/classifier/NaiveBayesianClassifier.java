@@ -5,7 +5,10 @@ import interactivelearner.data.Corpus;
 import interactivelearner.data.Document;
 import interactivelearner.featureselection.ChiSquare;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class NaiveBayesianClassifier implements Classifier {
 
@@ -13,7 +16,11 @@ public class NaiveBayesianClassifier implements Classifier {
     private Map<Category, Double> priorProbabilities = new HashMap<>();
     private Map<String, Map<Category, Double>> conditionalProbabilities = new HashMap<>();
 
-    private static final int SMOOTHING_FACTOR = 1;
+    private int smoothingFactor;
+
+    public NaiveBayesianClassifier(int smoothingFactor) {
+        this.smoothingFactor = smoothingFactor;
+    }
 
     @Override
     public void train(Corpus corpus) {
@@ -27,8 +34,8 @@ public class NaiveBayesianClassifier implements Classifier {
 
             for (String word : vocabulary) {
                 int wordFrequencyInCategory = category.getWordFrequency(word);
-                double probability = ((double) (wordFrequencyInCategory + SMOOTHING_FACTOR)) /
-                        ((double) (categoryWordCount + SMOOTHING_FACTOR * corpus.getWordCount()));
+                double probability = ((double) (wordFrequencyInCategory + smoothingFactor)) /
+                        ((double) (categoryWordCount + smoothingFactor * corpus.getWordCount()));
 
                 if (conditionalProbabilities.containsKey(word)) {
                     conditionalProbabilities.get(word).put(category, probability);
