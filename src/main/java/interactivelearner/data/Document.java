@@ -13,6 +13,10 @@ public class Document {
     }
 
     public int wordCount(String word) {
+        if (words.get(word) == null) {
+            return 0;
+        }
+
         return words.get(word);
     }
 

@@ -21,6 +21,21 @@ public class Corpus {
         return categories;
     }
 
+    /**
+     * Returns the amount of documents in the Corpus
+     *
+     * @return the amount of documents in the Corpus
+     */
+    public int getDocumentCount() {
+        int count = 0;
+
+        for (Category category : categories) {
+            count += category.totalDocuments();
+        }
+
+        return count;
+    }
+
     public Set<String> getWords() {
         return categories.stream()
             .flatMap(d -> d.getWords().stream())
