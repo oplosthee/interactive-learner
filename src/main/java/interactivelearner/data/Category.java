@@ -23,18 +23,18 @@ public class Category {
         documents.add(document);
     }
 
-    public int totalWords() {
+    public int getWordCount() {
         int count = 0;
         for (Document document : documents) {
-            count += document.totalWords();
+            count += document.getWordCount();
         }
         return count;
     }
 
-    public int wordCount(String word) {
+    public int getWordFrequency(String word) {
         int count = 0;
         for (Document document : documents) {
-            count += document.wordCount(word);
+            count += document.getWordFrequency(word);
         }
         return count;
     }
