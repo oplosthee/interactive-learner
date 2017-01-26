@@ -41,4 +41,14 @@ public class Corpus {
             .flatMap(d -> d.getWords().stream())
             .collect(Collectors.toSet());
     }
+
+    public int getWordCount() {
+        int count = 0;
+
+        for (Category category : categories) {
+            count += category.getWordCount();
+        }
+
+        return count;
+    }
 }

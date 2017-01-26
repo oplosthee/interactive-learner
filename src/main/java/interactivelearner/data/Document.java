@@ -12,7 +12,7 @@ public class Document {
         indexWords(words);
     }
 
-    public int wordCount(String word) {
+    public int getWordFrequency(String word) {
         if (words.get(word) == null) {
             return 0;
         }
@@ -20,7 +20,7 @@ public class Document {
         return words.get(word);
     }
 
-    public int totalWords() {
+    public int getWordCount() {
         return words.keySet().size();
     }
 

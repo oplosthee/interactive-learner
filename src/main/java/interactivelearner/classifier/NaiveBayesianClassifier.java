@@ -10,9 +10,10 @@ import java.util.*;
 public class NaiveBayesianClassifier implements Classifier {
 
     private List<String> vocabulary;
-    private Map<Category, Double> prior = new HashMap<>();
-    private Map<String, Map<Category, Double>> condprob = new HashMap<>();
+    private Map<Category, Double> priorProbabilities = new HashMap<>();
+    private Map<String, Map<Category, Double>> conditionalProbabilities = new HashMap<>();
 
+    private static final int SMOOTHING_FACTOR = 1;
 
     @Override
     public void train(Corpus corpus) {
@@ -20,22 +21,21 @@ public class NaiveBayesianClassifier implements Classifier {
         int documentCount = corpus.getDocumentCount();
 
         for (Category category : corpus.getCategories()) {
-            int documentsInClass = category.totalDocuments();
-            prior.put(category, (double) documentsInClass / (double) documentCount);
-            int wordCount = category.getWords().size();
+            int documentsInCategory = category.totalDocuments();
+            priorProbabilities.put(category, (double) documentsInCategory / (double) documentCount);
+            int categoryWordCount = category.getWordCount();
 
             for (String word : vocabulary) {
-                int wordCountInCategory = category.wordCount(word);
-                // TODO: Compute in log space.
-                // TODO: Fix calculation of conditional probabilities.
-                double value = ((double) (wordCountInCategory + 1)) / ((double) (wordCount + 1));
+                int wordFrequencyInCategory = category.getWordFrequency(word);
+                double probability = ((double) (wordFrequencyInCategory + SMOOTHING_FACTOR)) /
+                        ((double) (categoryWordCount + SMOOTHING_FACTOR * corpus.getWordCount()));
 
-                if (condprob.containsKey(word)) {
-                    condprob.get(word).put(category, value);
+                if (conditionalProbabilities.containsKey(word)) {
+                    conditionalProbabilities.get(word).put(category, probability);
                 } else {
                     HashMap<Category, Double> result = new HashMap<>();
-                    result.put(category, value);
-                    condprob.put(word, result);
+                    result.put(category, probability);
+                    conditionalProbabilities.put(word, result);
                 }
             }
         }
@@ -44,12 +44,13 @@ public class NaiveBayesianClassifier implements Classifier {
     @Override
     public Category classify(Corpus corpus, Document document) {
         Map<Category, Double> scores = new HashMap<>();
+        scores.putAll(priorProbabilities);
 
         for (Category category : corpus.getCategories()) {
             for (String word : document.getWords()) {
                 if (vocabulary.contains(word)) {
-                    Double value = prior.get(category);
-                    value += condprob.get(word).get(category);
+                    Double value = scores.get(category);
+                    value += Math.log(conditionalProbabilities.get(word).get(category));
                     scores.put(category, value);
                 }
             }
