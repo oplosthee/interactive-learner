@@ -23,8 +23,8 @@
       </HBox>
       <HBox spacing="10.0">
          <children>
-            <Label text="File to classify:" />
-            <Label fx:id="specifiedFile" text="null" />
+            <Label minWidth="-Infinity" text="File to classify:" HBox.hgrow="ALWAYS" />
+            <Label fx:id="specifiedFile" text="No file specified" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -51,7 +51,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
          <children>
-            <Button id="trainButton" mnemonicParsing="false" text="New training set" onAction="#toTrainScene"/>
+            <Button id="trainButton" mnemonicParsing="false" onAction="#toTrainScene" text="New training set" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
