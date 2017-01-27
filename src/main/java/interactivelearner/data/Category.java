@@ -24,7 +24,7 @@ public class Category {
     }
 
     public void addDocuments(List<Document> documents) {
-        documents.addAll(documents);
+        this.documents.addAll(documents);
     }
 
     public int getWordCount() {

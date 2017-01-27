@@ -2,6 +2,7 @@ package interactivelearner.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,15 @@ public class Corpus {
 
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public Category getCategory(String name) {
+        for (Category category : categories) {
+            if (Objects.equals(category.getName(), name)) {
+                return category;
+            }
+        }
+        return null;
     }
 
     /**

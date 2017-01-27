@@ -5,11 +5,13 @@ import interactivelearner.data.Category;
 import interactivelearner.data.Corpus;
 import interactivelearner.util.FileProcessor;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -19,6 +21,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TrainController implements Initializable {
+
+    private Stage mainStage;
 
     private File selectedFile;
     private NaiveBayesianClassifier classifier;
@@ -35,7 +39,8 @@ public class TrainController implements Initializable {
     @FXML
     Button trainButton;
     @FXML
-    VBox vBox;
+    Label warning;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,12 +58,16 @@ public class TrainController implements Initializable {
 
     public void handleFolderSelection() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        Stage stage = (Stage) vBox.getScene().getWindow();
-        selectedFile = directoryChooser.showDialog(stage);
-        selectedFolder.setText(selectedFile.getPath());
+        selectedFile = directoryChooser.showDialog(mainStage);
+        if (selectedFile != null) {
+            selectedFolder.setText(selectedFile.getPath());
+        } else {
+            selectedFolder.setText("null");
+        }
     }
 
     public void trainClassifier() {
+        System.out.println("started training");
         classifier = new NaiveBayesianClassifier(Integer.valueOf(smoothing.getCharacters().toString()));
         corpus = new Corpus(Integer.valueOf(chiValue.getCharacters().toString()));
         File[] directories = selectedFile.listFiles(File::isDirectory);
@@ -74,5 +83,28 @@ public class TrainController implements Initializable {
             }
         }
         classifier.train(corpus);
+        System.out.println("finished training");
+    }
+
+    public void startClassifyScene() {
+        try {
+            if (corpus != null && classifier != null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/ClassifyGUI.fxml"));
+                Parent classify = loader.load();
+                ClassifyController controller = loader.getController();
+                Scene classifyScene = new Scene(classify, 600, 400);
+                controller.initData(corpus, classifier, mainStage);
+                mainStage.setScene(classifyScene);
+                mainStage.show();
+            } else {
+                warning.setText("please select training data and train the classifier");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void getStage(Stage stage) {
+        mainStage = stage;
     }
 }
