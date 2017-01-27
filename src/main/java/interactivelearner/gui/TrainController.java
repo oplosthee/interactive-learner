@@ -21,11 +21,9 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.xml.soap.Text;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -56,6 +54,8 @@ public class TrainController implements Initializable {
     TextField commonWordsField;
     @FXML
     TextField unCommonWordsField;
+    @FXML
+    Label trainingProgress;
 
 
     @Override
@@ -99,9 +99,10 @@ public class TrainController implements Initializable {
     }
 
     public void trainClassifier() {
-        classifier = new NaiveBayesianClassifier(Integer.valueOf(smoothing.getCharacters().toString()));
-        corpus = new Corpus(Integer.valueOf(chiValue.getCharacters().toString()));
+        trainingProgress.setText("Training...");
         if (selectedFile != null) {
+            classifier = new NaiveBayesianClassifier(Integer.valueOf(smoothing.getCharacters().toString()));
+            corpus = new Corpus(Integer.valueOf(chiValue.getCharacters().toString()));
             File[] directories = selectedFile.listFiles(File::isDirectory);
             if (directories != null) {
                 for (File directory : directories) {
@@ -115,7 +116,9 @@ public class TrainController implements Initializable {
                 }
             }
             classifier.train(corpus);
+            trainingProgress.setText("Done!");
         } else {
+            trainingProgress.setText("");
             warning.setText("please select training data");
         }
     }
