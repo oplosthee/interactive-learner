@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interactivelearner.gui.TrainController" fx:id="vBox">
+   <children>
+      <HBox spacing="10.0">
+         <children>
+            <Label text="Smoothing (&gt;= 1)">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="30.0" prefWidth="100.0" text="1" fx:id="smoothing"/>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox spacing="10.0">
+         <children>
+            <Label text="Chi values">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="30.0" prefWidth="100.0" text="300" fx:id="chiValue"/>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox spacing="30.0">
+         <children>
+            <Label text="Test folder: " />
+            <Label fx:id="selectedFolder"/>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" text="Select folder to classify" fx:id="folderButton" onAction="#handleFolderSelection"/>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" text="Train" fx:id="trainButton" onAction="#trainClassifier"/>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
