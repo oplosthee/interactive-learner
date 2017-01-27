@@ -32,6 +32,10 @@ public class Document {
         return words.keySet();
     }
 
+    public HashMap<String, Integer> getMap() {
+        return words;
+    }
+
     private void indexWords(List<String> words) {
         for (String word : words) {
             if (this.words.containsKey(word)) {
