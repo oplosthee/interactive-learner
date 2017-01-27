@@ -9,11 +9,6 @@ import java.util.stream.Collectors;
 public class ChiSquare {
 
     /**
-     * The maximum amount of selected words in the resulting Vocabulary.
-     */
-    private static final int MAXIMUM_VOCABULARY_LENGTH = 300;
-
-    /**
      * Creates a list of words to be used for processing text documents.
      * @param corpus the corpus to be used for selecting the meaningful words
      * @return list of meaningful words
@@ -24,7 +19,12 @@ public class ChiSquare {
         for (String word : words) {
             wordScores.put(word, chiSquareValue(word, corpus));
         }
-        return getHighestValues(wordScores);
+        return wordScores.entrySet()
+                .stream()
+                .sorted((o1, o2) -> -Double.compare(o1.getValue(), o2.getValue()))
+                .map(Map.Entry::getKey)
+                .limit(corpus.getVocabularyLength())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -57,19 +57,5 @@ public class ChiSquare {
             }
         }
         return result;
-    }
-
-    /**
-     * Returns a list of words corresponding to the highest scored chi-square values.
-     * @param wordScores map of words and chi-square values
-     * @return list of best words to use as vocabulary
-     */
-    private static List<String> getHighestValues(HashMap<String, Double> wordScores) {
-        return wordScores.entrySet()
-                .stream()
-                .sorted((o1, o2) -> -Double.compare(o1.getValue(), o2.getValue()))
-                .map(Map.Entry::getKey)
-                .limit(MAXIMUM_VOCABULARY_LENGTH)
-                .collect(Collectors.toList());
     }
 }
