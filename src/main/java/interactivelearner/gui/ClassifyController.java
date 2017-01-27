@@ -57,7 +57,7 @@ public class ClassifyController implements Initializable {
         if (file != null) {
             specifiedFile.setText(file.getPath());
         } else {
-            specifiedFile.setText("null");
+            specifiedFile.setText("No file specified");
         }
     }
 
@@ -104,7 +104,7 @@ public class ClassifyController implements Initializable {
             Parent train = loader.load();
             TrainController controller = loader.getController();
             controller.getStage(mainStage);
-            Scene trainScene = new Scene(train, 600, 400);
+            Scene trainScene = new Scene(train, 400, 500);
             mainStage.setScene(trainScene);
             mainStage.show();
         } catch (IOException e) {

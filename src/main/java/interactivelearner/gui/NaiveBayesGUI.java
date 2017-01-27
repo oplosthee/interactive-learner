@@ -15,7 +15,7 @@ public class NaiveBayesGUI extends Application {
         TrainController controller = loader.getController();
         controller.getStage(primaryStage);
         primaryStage.setTitle("Naive bayesian classifier");
-        Scene trainScene = new Scene(train, 600, 400);
+        Scene trainScene = new Scene(train, 400, 500);
         primaryStage.setScene(trainScene);
         primaryStage.show();
     }
