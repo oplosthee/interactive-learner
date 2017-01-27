@@ -22,6 +22,7 @@ public class ChiSquare {
         return wordScores.entrySet()
                 .stream()
                 .sorted((o1, o2) -> -Double.compare(o1.getValue(), o2.getValue()))
+                .filter(e -> !e.getValue().isNaN())
                 .map(Map.Entry::getKey)
                 .limit(corpus.getVocabularyLength())
                 .collect(Collectors.toList());
