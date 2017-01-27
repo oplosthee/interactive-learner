@@ -16,17 +16,13 @@ public class StopWordTransformer implements DocumentTransformer {
             return documents;
         }
 
-        List<Document> modifiedDocuments = new ArrayList<>();
-
         for (Document document : documents) {
             for (String stopWord : stopWords) {
                 document.getMap().remove(stopWord);
             }
-
-            modifiedDocuments.add(document);
         }
 
-        return modifiedDocuments;
+        return documents;
     }
 
     public StopWordTransformer(String stopWordsPath) {
